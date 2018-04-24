@@ -1,8 +1,1 @@
 ---
-- name: clean instances
-  os_server:
-    auth: "{{ auth }}"
-    name: "{{ item.name }}"
-    state: absent
-    wait: no
-  with_items: "{{ instances }}"
