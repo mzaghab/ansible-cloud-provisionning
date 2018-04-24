@@ -1,0 +1,100 @@
+#!/bin/bash
+
+#force hostname and domain
+hostnamectl set-hostname `hostname`.{{hostname_suffix}}
+sed -i.bak '/ - update_hostname/d' /etc/cloud/cloud.cfg
+
+# add phenix user for admin connection
+# declare phenix_adm user
+useradd -m -s /bin/bash phenix_adm
+mkdir -p /home/phenix_adm/.ssh
+chmod 0700 /home/phenix_adm/.ssh
+echo '{{phenix_adm_private_key}}' > /home/phenix_adm/.ssh/id_rsa
+chmod 0600 /home/phenix_adm/.ssh/id_rsa
+chown -R phenix_adm /home/phenix_adm
+
+# update selinux state
+sed -i 's/SELINUX=enforcing/SELINUX=permissive/g' /etc/selinux/config
+
+# Remove require tty into sudoer
+sed -i s/^"Defaults    requiretty"//g /etc/sudoers
+echo 'Defaults    !requiretty' >> /etc/sudoers
+
+echo "%phenix_adm ALL= NOPASSWD: ALL" >> /etc/sudoers
+
+{% for user in console_phenix_user %}
+echo 'add user {{user.name}} ...'
+useradd -m -g phenix_adm -s /bin/bash {{user.name}}
+mkdir -p /home/{{user.name}}/.ssh
+chmod 0700 /home/{{user.name}}/.ssh
+echo '{{user.pub_key}}' > /home/{{user.name}}/.ssh/authorized_keys
+chmod 0600 /home/{{user.name}}/.ssh/authorized_keys
+chown -R  {{user.name}} /home/{{user.name}}
+{% endfor%}
+
+#Delete default repo files
+rm /etc/yum.repos.d/Cen*
+
+# Declare local base repository
+cat << EOF >/etc/yum.repos.d/base.repo
+
+[centos-base73]
+name=centos-base73
+baseurl={{phenix_repo}}/Centos73/os
+gpgcheck=0
+sslverify=false
+enabled=1
+proxy=_none_
+
+EOF
+
+# yum clean
+yum clean all
+
+# Force ntp synchronisation
+yum install -y ntp
+ln -fs /usr/share/zoneinfo/Europe/Paris /etc/localtime
+timedatectl set-timezone Europe/Paris
+
+echo "" > /etc/ntp.conf
+
+for ntpsrv in `echo {{ ntp_server }} | sed 's/,/ /g'`
+do
+    echo "server ${ntpsrv}" >>/etc/ntp.conf
+    ntpdate ${ntpsrv}
+done
+
+systemctl enable ntpd
+
+service ntpd start
+
+# Configure dns
+
+cat /etc/resolv.conf  | grep -iv "^nameserver" > /etc/resolv.conftmp
+
+for dnssrv in `echo {{ dns_server }} | sed 's/,/ /g'`
+do
+    echo "nameserver ${dnssrv}" >>/etc/resolv.conftmp
+done
+
+cat /etc/resolv.conftmp > /etc/resolv.conf
+rm -f /etc/resolv.conftmp
+
+#Disable Firewall
+systemctl disable firewalld
+
+# Disable Ipv6
+cat << EOF >/etc/sysctl.d/disableipv6.conf
+net.ipv6.conf.all.disable_ipv6 = 1
+EOF
+
+# Base
+export http_proxy={{http_proxy}}
+export https_proxy={{http_proxy}}
+export no_proxy={{no_proxy}}
+
+echo 'proxy={{http_proxy}}' >> /etc/yum.conf
+
+yum install -y wget vim curl screen
+
+reboot now

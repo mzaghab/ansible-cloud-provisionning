@@ -1,0 +1,6 @@
+- hosts: localhost
+#  vars_files:
+#    - group_vars/{{site}}
+#    - secrets/{{site}}-secret.yml
+  roles:
+    - {role: azure ,  tags: [azure] }

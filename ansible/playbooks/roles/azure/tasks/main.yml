@@ -1,0 +1,7 @@
+---
+
+- include: clean.yml
+  when: instances_clean == 'True'
+
+- include: deploy.yml
+  when: instances_clean == 'False'

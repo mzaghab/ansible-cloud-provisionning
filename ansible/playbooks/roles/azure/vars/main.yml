@@ -1,0 +1,10 @@
+---
+azure_resource_group: "my-resource"
+azure_storage_account: "myresourcegroupdiag861"
+azure_storage_account_type: "Standard_LRS"
+azure_virtual_network: "my-resource-group-vnet"
+azure_subnet: "my-resource"
+azure_public_ip_address: "my-resource"
+azure_security_group: "my-resource"
+azure_network_interface: "my-resource"
+azure_virtual_machine: "my-resource"
