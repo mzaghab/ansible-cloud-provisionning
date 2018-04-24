@@ -1,10 +1,16 @@
 ---
+# 
+- name: Create a resource group
+  azure_rm_resourcegroup:
+    name: "{{ azure_resource_group }}"
+    location: "{{ azure_location }}"
+  tags: test
+
 - name: Create storage account
   azure_rm_storageaccount:
     resource_group: "{{ azure_resource_group }}"
     name: "{{ azure_storage_account }}"
     account_type: "{{ azure_storage_account_type }}"
-# tags: test
 
 - name: Create virtual network
   azure_rm_virtualnetwork:
