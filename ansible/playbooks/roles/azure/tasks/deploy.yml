@@ -1,36 +1,30 @@
 ---
 
-- name: Create a resource group
+- name: Create a resource group "{{ azure_resource_group }}"
   azure_rm_resourcegroup:
     name: "{{ azure_resource_group }}"
     location: "{{ azure_location }}"
 
-- name: Create storage account
+- name: Create storage account "{{ azure_storage_account }}"
   azure_rm_storageaccount:
     resource_group: "{{ azure_resource_group }}"
     name: "{{ azure_storage_account }}"
     account_type: "{{ azure_storage_account_type }}"
 
-- name: Create virtual network
+- name: Create virtual network "{{ azure_virtual_network }}"
   azure_rm_virtualnetwork:
     resource_group: "{{ azure_resource_group }}"
     name: "{{ azure_virtual_network }}"
     address_prefixes: "{{ azure_network_address_prefixes }}"
 
-- name: Add subnet
+- name: Add subnet "{{ azure_subnet }}"
   azure_rm_subnet:
     resource_group: "{{ azure_resource_group }}"
     name: "{{ azure_subnet }}"
     address_prefix: "{{ azure_network_address_prefixes }}"
     virtual_network: "{{ azure_virtual_network }}"
 
-- name: Create public ip
-  azure_rm_publicipaddress:
-    resource_group: "{{ azure_resource_group }}"
-    allocation_method: Static
-    name: "{{ azure_public_ip_address }}"
-
-- name: Create security group that allows SSH
+- name: Create security group that allows SSH "{{ azure_security_group }}"
   azure_rm_securitygroup:
     resource_group: "{{ azure_resource_group }}"
     name: "{{ azure_security_group }}"
@@ -42,33 +36,21 @@
         priority: 101
         direction: Inbound
 
-- name: Create network interface
-  azure_rm_networkinterface:
-    resource_group: "{{ azure_resource_group }}"
-    name: "{{ azure_network_interface }}"
-    virtual_network: "{{ azure_virtual_network }}"
-    subnet: "{{ azure_subnet }}"
-    ip_configurations:
-      - name: "ipconfig1"
-        public_ip_address_name: "{{ azure_public_ip_address }}"
-    security_group: "{{ azure_security_group }}"
-
-- name: Create virtual machine
+- name: Create virtual machines
   azure_rm_virtualmachine:
     resource_group: "{{ azure_resource_group }}"
-    name: "{{ azure_virtual_machine }}"
-    vm_size: "{{ azure_default_vm_size }}"
+    name: "{{ item.name }}"
+    vm_size: "{{  item.vm_size | default(azure_default_vm_size) }}"
     storage_account: "{{ azure_storage_account }}"
-#    storage_container: testvm001
-#    storage_blob: testvm001.vhd
     admin_username: "{{ azure_vm_admin_username }}"
     ssh_password_enabled: false
     ssh_public_keys:
       - path: "/home/{{ azure_vm_admin_username }}/.ssh/authorized_keys"
         key_data: "{{ azure_vm_admin_ssh_key}}"
-    network_interfaces: "{{ azure_network_interface }}"
     image:
-      offer: CentOS
-      publisher: OpenLogic
-      sku: '7.4'
-      version: latest
+      offer: "{{ azure_vm_image.offer }}"
+      publisher: "{{ azure_vm_image.publisher }}"
+      sku: "{{ azure_vm_image.sku }}"
+      version: "{{ azure_vm_image.version }}"
+  with_items: "{{ azure_virtual_machines }}"
+  tags : test
