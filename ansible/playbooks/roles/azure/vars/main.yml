@@ -1,17 +1,18 @@
 ---
 # AZURE param
 azure_storage_account_type: "Standard_LRS"
-azure_location: "FranceCentral"
+azure_default_location: "FranceCentral" # westeurope or FranceCentral
 azure_default_vm_size: "Standard_D2_v3"
 azure_vm_admin_username: "mounir"
 azure_vm_admin_ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+6UbxpyW5OLzvEW6OKHxx6X/VCXoCMNs2irhiBE9Gxf4Hziyzw7pRl1pYFr9wXdkte7zw0X5zc5PbTeWLEsrgFy22Kxkk2eTVIc6QEPuMGgk3+W/5LzSoSkW1oehwKEXVUvSHqO6ZATyUZs1dwLQqflp7X2K4a28IRPXkcQzCSh7OKtv2zQ6/IhvHGx2bf085Kn7iDvIYuYYabsJwblkexpkFqEwlNcgthhcdJW5Wgn3ZrmdaIJwf2grT0rybPN7x5W7Y6CtghypXJX7chGKz4ghwraFlccN9iv9aHznRj/8nKAmMyAcn/VnzvmF7j5jCyeecL+odjWyZxJy69XZN"
 
 # Cluster params
-azure_resource_group: "my-resource-group"
-azure_storage_account: "myresourcegroupdiag861"
-azure_virtual_network: "my-virtual-network"
-azure_subnet: "my-subnet"
-azure_security_group: "my-security-group"
+azure_resource_suffixe: "001"
+azure_resource_group: "my-resource-group-{{ azure_resource_suffixe }}"
+azure_storage_account: "mystorageaccount861{{ azure_resource_suffixe }}"
+azure_virtual_network: "my-virtual-network-{{ azure_resource_suffixe }}"
+azure_subnet: "my-subnet-{{ azure_resource_suffixe }}"
+azure_security_group: "my-security-group-{{ azure_resource_suffixe }}"
 azure_network_address_prefixes: "10.0.0.0/24"
 azure_vm_image:
   {   offer: "CentOS",
@@ -20,10 +21,10 @@ azure_vm_image:
       version: "latest"
   }
 azure_virtual_machines: 
-  - { name: "local-repo", vm_size: "Standard_D2_v3"}
-  - { name: "host01"}
-  - { name: "host02"}
-  - { name: "host03"}
-  - { name: "host04"}
-#  - { name: "host05"}
+  - { name: "local-repo", vm_size: "Standard_D1_v2"}
+  - { name: "host01-{{ azure_resource_suffixe }}"}
+  - { name: "host02-{{ azure_resource_suffixe }}"}
+  - { name: "host03-{{ azure_resource_suffixe }}"}
+  - { name: "host04-{{ azure_resource_suffixe }}"}
+  - { name: "host05-{{ azure_resource_suffixe }}"}
 

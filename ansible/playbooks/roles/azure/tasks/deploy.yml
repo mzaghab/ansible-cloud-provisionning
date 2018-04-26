@@ -3,7 +3,7 @@
 - name: Create a resource group "{{ azure_resource_group }}"
   azure_rm_resourcegroup:
     name: "{{ azure_resource_group }}"
-    location: "{{ azure_location }}"
+    location: "{{ azure_default_location }}"
 
 - name: Create storage account "{{ azure_storage_account }}"
   azure_rm_storageaccount:
@@ -41,6 +41,7 @@
     resource_group: "{{ azure_resource_group }}"
     name: "{{ item.name }}"
     vm_size: "{{  item.vm_size | default(azure_default_vm_size) }}"
+    location: "{{  item.location | default(azure_default_location) }}"
     storage_account: "{{ azure_storage_account }}"
     admin_username: "{{ azure_vm_admin_username }}"
     ssh_password_enabled: false
