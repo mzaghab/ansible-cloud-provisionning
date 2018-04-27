@@ -1,0 +1,5 @@
+- Network interfaces is not affected to the specified Network security groups instead a default one is created
+  see : https://github.com/ansible/ansible/issues/36093
+- define hostname for hosts : in /etc/hosts see https://docs.hortonworks.com/HDPDocuments/Ambari-2.6.1.5/bk_ambari-installation/content/edit_the_host_file.html
+
+
