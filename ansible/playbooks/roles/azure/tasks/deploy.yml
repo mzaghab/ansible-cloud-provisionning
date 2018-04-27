@@ -59,8 +59,8 @@
   azure_rm_virtualmachine:
     resource_group: "{{ azure_resource_group }}"
     name: "{{ item.name }}"
-    vm_size: "{{  item.vm_size | default(azure_default_vm_size) }}"
-    location: "{{  item.location | default(azure_default_location) }}"
+    vm_size: "{{ item.vm_size | default(azure_default_vm_size) }}"
+    location: "{{ azure_default_location }}"
     storage_account: "{{ azure_storage_account }}"
     admin_username: "{{ azure_vm_admin_username }}"
     ssh_password_enabled: false
@@ -75,4 +75,3 @@
       sku: "{{ azure_vm_image.sku }}"
       version: "{{ azure_vm_image.version }}"
   with_items: "{{ azure_virtual_machines }}"
-  tags : test
