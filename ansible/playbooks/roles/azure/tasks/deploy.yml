@@ -49,10 +49,10 @@
     security_group: "{{ azure_security_group }}"
     virtual_network: "{{ azure_virtual_network }}"
     subnet: "{{ azure_subnet }}"
-#    ip_configurations:
-#      - name: ipconfig1
-#        public_ip_address_name: publicip001
-#        primary: True
+    ip_configurations:
+      - name: "{{ item.ip_config_name }}"
+        public_ip_address_name: "{{ item.public_ip }}"
+        primary: True
   with_items: "{{ azure_virtual_machines }}"
 
 - name: Create virtual machines
