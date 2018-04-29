@@ -23,9 +23,9 @@ azure_vm_image:
   }
 azure_virtual_machines: 
   - { name: "local-repo-{{ azure_resource_suffixe }}", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-lr", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-lr", public_ip: "public-ip-{{ azure_resource_suffixe }}-lr", vm_size: "Standard_D1_v2"}
-  - { name: "myhost-{{ azure_resource_suffixe }}-01", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-01", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-01", public_ip: "public-ip-{{ azure_resource_suffixe }}-01"}
-  - { name: "myhost-{{ azure_resource_suffixe }}-02", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-02", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-02", public_ip: "public-ip-{{ azure_resource_suffixe }}-02"}
-  - { name: "myhost-{{ azure_resource_suffixe }}-03", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-03", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-03", public_ip: "public-ip-{{ azure_resource_suffixe }}-03"}
-  - { name: "myhost-{{ azure_resource_suffixe }}-04", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-04", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-04", public_ip: "public-ip-{{ azure_resource_suffixe }}-04"}
-  - { name: "myhost-{{ azure_resource_suffixe }}-05", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-05", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-05", public_ip: "public-ip-{{ azure_resource_suffixe }}-05"}
+  - { name: "myhost-{{ azure_resource_suffixe }}-01", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-01", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-01", public_ip: "public-ip-{{ azure_resource_suffixe }}-01", tags: {'hdp':'','ambari-server':''}}
+  - { name: "myhost-{{ azure_resource_suffixe }}-02", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-02", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-02", public_ip: "public-ip-{{ azure_resource_suffixe }}-02", tags: {'hdp':''}}
+  - { name: "myhost-{{ azure_resource_suffixe }}-03", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-03", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-03", public_ip: "public-ip-{{ azure_resource_suffixe }}-03", tags: {'hdp':'','mariadb':''}}
+  - { name: "myhost-{{ azure_resource_suffixe }}-04", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-04", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-04", public_ip: "public-ip-{{ azure_resource_suffixe }}-04", tags: {'hdp':''}}
+  - { name: "myhost-{{ azure_resource_suffixe }}-05", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-05", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-05", public_ip: "public-ip-{{ azure_resource_suffixe }}-05", tags: {'hdp':''}}
 
