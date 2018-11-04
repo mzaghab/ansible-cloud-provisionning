@@ -1,0 +1,33 @@
+---
+service_account_email: "mzaghab@hortonworks-204714.iam.gserviceaccount.com"
+
+# AZURE param
+azure_storage_account_type: "Standard_LRS"
+azure_default_location: "FranceCentral" # FranceCentral* northeurope or westeurope or FranceCentral
+azure_default_vm_size: "Standard_D2_v3"
+azure_vm_admin_username: "mounir"
+azure_vm_admin_ssh_key: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC+6UbxpyW5OLzvEW6OKHxx6X/VCXoCMNs2irhiBE9Gxf4Hziyzw7pRl1pYFr9wXdkte7zw0X5zc5PbTeWLEsrgFy22Kxkk2eTVIc6QEPuMGgk3+W/5LzSoSkW1oehwKEXVUvSHqO6ZATyUZs1dwLQqflp7X2K4a28IRPXkcQzCSh7OKtv2zQ6/IhvHGx2bf085Kn7iDvIYuYYabsJwblkexpkFqEwlNcgthhcdJW5Wgn3ZrmdaIJwf2grT0rybPN7x5W7Y6CtghypXJX7chGKz4ghwraFlccN9iv9aHznRj/8nKAmMyAcn/VnzvmF7j5jCyeecL+odjWyZxJy69XZN"
+
+# Cluster params
+azure_resource_suffixe: "001"
+azure_resource_group: "my-resource-group-{{ azure_resource_suffixe }}"
+azure_storage_account: "mystorageaccount861{{ azure_resource_suffixe }}"
+azure_virtual_network: "my-virtual-network-{{ azure_resource_suffixe }}"
+azure_virtual_interface: "my-virtual-interface-{{ azure_resource_suffixe }}"
+azure_subnet: "my-subnet-{{ azure_resource_suffixe }}"
+azure_security_group: "my-security-group-{{ azure_resource_suffixe }}"
+azure_network_address_prefixes: "10.0.0.0/24"
+azure_vm_image:
+  {   offer: "CentOS",
+      publisher: "OpenLogic",
+      sku: "7.4",
+      version: "latest"
+  }
+azure_virtual_machines: 
+  - { name: "myhost-{{ azure_resource_suffixe }}-01", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-01", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-01", public_ip: "public-ip-{{ azure_resource_suffixe }}-01", tags: {'hdp':'','ambari-server':''}}
+  - { name: "myhost-{{ azure_resource_suffixe }}-02", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-02", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-02", public_ip: "public-ip-{{ azure_resource_suffixe }}-02", tags: {'hdp':''}}
+  - { name: "myhost-{{ azure_resource_suffixe }}-03", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-03", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-03", public_ip: "public-ip-{{ azure_resource_suffixe }}-03", tags: {'hdp':'','mariadb':''}}
+  - { name: "myhost-{{ azure_resource_suffixe }}-04", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-04", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-04", public_ip: "public-ip-{{ azure_resource_suffixe }}-04", tags: {'hdp':''}}
+  - { name: "myhost-{{ azure_resource_suffixe }}-05", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-05", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-05", public_ip: "public-ip-{{ azure_resource_suffixe }}-05", tags: {'hdp':''}}
+#  - { name: "local-repo-{{ azure_resource_suffixe }}", virtual_interface: "vir-net-{{ azure_resource_suffixe }}-lr", ip_config_name: "ip-config-{{ azure_resource_suffixe }}-lr", public_ip: "public-ip-{{ azure_resource_suffixe }}-lr", vm_size: "Standard_D1_v2"}
+

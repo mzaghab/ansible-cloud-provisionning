@@ -1,3 +1,4 @@
 - hosts: localhost
   roles:
     - {role: azure ,  tags: [azure] }
+    - {role: gcp ,  tags: [gcp] }
